@@ -5,6 +5,10 @@
   {{ super() }}
   <script>
     $(document).ready(function() {
+      $('#refreshBtn').click(function() {
+        location.reload();
+      });
+
       $('#clearLogBtn').click(function() {
         $.get("{{ url_for('clear_data') }}")
         location.reload();
@@ -14,7 +18,7 @@
 {% endblock %}
 
 
-{% block title %}Klingel Watcher{% endblock %}
+{% block title %}Doorbell Watcher{% endblock %}
 
 
 {% block navbar %}
@@ -22,7 +26,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">
-        Klingel-Logger
+        Doorbell Watcher
       </a>
     </div>
   </div>
@@ -33,15 +37,20 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-xs-6 col-xs-offset-3">
-      <button id="clearLogBtn" type="button" class="btn btn-default navbar-btn pull-right">Log löschen</button>
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
+      <button id="refreshBtn" type="button" class="btn btn-primary navbar-btn">
+        <span class="glyphicon glyphicon-refresh"></span> Refresh
+      </button>
+      <button id="clearLogBtn" type="button" class="btn btn-default pull-right navbar-btn">
+        <span class="glyphicon glyphicon-remove"></span> Clear
+      </button>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-xs-offset-3">
+    <div class="col-md-6 col-md-offset-3 cols-xs-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Klingelzeiten
+          <h3 class="panel-title">Ring Times
           </h3>
         </div>
         <div class="panel-body">
