@@ -3,3 +3,4 @@ venv
 bellwatcher.sublime-project
 bellwatcher.sublime-workspace
 db.json
+fabfile.py

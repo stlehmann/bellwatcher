@@ -2,7 +2,7 @@ import machine
 import time
 from urequests import post
 
-HOST_URI = 'http://192.168.1.102:5000/api/add'
+HOST_URI = 'http://mrl33h.de/bell/api/add'
 
 
 bell = machine.Pin(16, machine.Pin.IN)
@@ -13,7 +13,7 @@ def send():
     resp = post(HOST_URI)
     if resp.text == 'ok':
         led.high()
-    time.sleep(1)
+    time.sleep(10)
     led.low()
 
 
