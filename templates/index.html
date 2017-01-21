@@ -1,0 +1,63 @@
+{% extends "bootstrap/base.html" %}
+
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    $(document).ready(function() {
+      $('#clearLogBtn').click(function() {
+        $.get("{{ url_for('clear_data') }}")
+        location.reload();
+      });
+    });
+  </script>
+{% endblock %}
+
+
+{% block title %}Klingel Watcher{% endblock %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        Klingel-Logger
+      </a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <button id="clearLogBtn" type="button" class="btn btn-default navbar-btn pull-right">Log löschen</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Klingelzeiten
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped">
+            {% for ring in rings %}
+            <tr>
+              <td>
+                {{ ring }}<br/>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
