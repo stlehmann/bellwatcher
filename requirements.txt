@@ -1,6 +1,4 @@
 arrow
 flask
 flask_bootstrap
-ptpython
-ipython
 tinydb

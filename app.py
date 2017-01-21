@@ -2,6 +2,8 @@ import arrow
 from tinydb import TinyDB
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
+from werkzeug.wsgi import DispatcherMiddleware
+from werkzeug.serving import run_simple
 
 
 app = Flask(__name__)
@@ -29,4 +31,7 @@ def clear_data():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', 5000, debug=True)
+    application = DispatcherMiddleware(None, {
+        '/bell': app
+    })
+    run_simple('localhost', 8081, application)
