@@ -1,6 +1,6 @@
 import arrow
 from tinydb import TinyDB
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from werkzeug.wsgi import DispatcherMiddleware
 from werkzeug.serving import run_simple
@@ -20,7 +20,11 @@ def index():
 
 @app.route('/api/add', methods=['POST'])
 def add_data():
-    db.insert({'datetime': arrow.now().format('DD.MM.YYYY HH:mm:ss')})
+    import pdb; pdb.set_trace()  # breakpoint 0a462e27 //
+    db.insert({
+        'datetime': arrow.now().format('DD.MM.YYYY HH:mm:ss'),
+        'count': request.json['count']
+    })
     return 'ok'
 
 
