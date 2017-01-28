@@ -21,7 +21,7 @@ def index():
 
 @app.route('/api/add', methods=['POST'])
 def add_data():
-    json_data = json.loads(request.data)
+    json_data = json.loads(request.data.decode('utf-8'))
     db.insert({
         'datetime': arrow.now().format('DD.MM.YYYY HH:mm:ss'),
         'count': json_data['count']
