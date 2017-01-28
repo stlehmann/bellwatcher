@@ -66,10 +66,10 @@
             {% for ring in rings %}
             <tr>
               <td>
-                {{ ring }}<br/>
+                {{ ring.datetime }}<br/>
               </td>
               <td>
-                <a class="remove-btn pull-right" href="#" data-id="{{ loop.index0 }}">
+                <a class="remove-btn pull-right" href="#" data-id="{{ ring.eid }}">
                   <span class="glyphicon glyphicon-remove"></span>
                 </a>
               </td>

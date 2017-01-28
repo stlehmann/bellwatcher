@@ -14,7 +14,7 @@ db = TinyDB('db.json')
 
 @app.route('/')
 def index():
-    rings = reversed([x['datetime'] for x in db.all()])
+    rings = reversed([x for x in db.all()])
     return render_template('index.html', rings=rings)
 
 
@@ -26,8 +26,8 @@ def add_data():
 
 @app.route('/api/remove/<id_>')
 def remove_data(id_):
-    item = db.all()[int(id_)]
-    db.remove(eids=[item.eid])
+    eid = int(id_)
+    db.remove(eids=[eid])
     return 'ok'
 
 
