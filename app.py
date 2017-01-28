@@ -1,4 +1,5 @@
 import arrow
+import json
 from tinydb import TinyDB
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
@@ -20,10 +21,10 @@ def index():
 
 @app.route('/api/add', methods=['POST'])
 def add_data():
-    import pdb; pdb.set_trace()  # breakpoint 0a462e27 //
+    json_data = json.loads(request.data)
     db.insert({
         'datetime': arrow.now().format('DD.MM.YYYY HH:mm:ss'),
-        'count': request.json['count']
+        'count': json_data['count']
     })
     return 'ok'
 
@@ -45,4 +46,4 @@ if __name__ == '__main__':
     application = DispatcherMiddleware(None, {
         '/bell': app
     })
-    run_simple('localhost', 8081, application)
+    run_simple('0.0.0.0', 8081, application)
