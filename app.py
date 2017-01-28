@@ -24,6 +24,13 @@ def add_data():
     return 'ok'
 
 
+@app.route('/api/remove/<id_>')
+def remove_data(id_):
+    item = db.all()[int(id_)]
+    db.remove(eids=[item.eid])
+    return 'ok'
+
+
 @app.route('/api/clear')
 def clear_data():
     db.purge()

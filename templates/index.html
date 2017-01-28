@@ -4,6 +4,7 @@
 {% block scripts %}
   {{ super() }}
   <script>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     $(document).ready(function() {
       $('#refreshBtn').click(function() {
         location.reload();
@@ -11,6 +12,13 @@
 
       $('#clearLogBtn').click(function() {
         $.get("{{ url_for('clear_data') }}")
+        location.reload();
+      });
+
+      $('.remove-btn').click(function(event) {
+        event.preventDefault();
+        id = $(this).data('id');
+        $.get($SCRIPT_ROOT + '/api/remove/' + id);
         location.reload();
       });
     });
@@ -41,9 +49,9 @@
       <button id="refreshBtn" type="button" class="btn btn-primary navbar-btn">
         <span class="glyphicon glyphicon-refresh"></span> Refresh
       </button>
-      <button id="clearLogBtn" type="button" class="btn btn-default pull-right navbar-btn">
+      <a class="btn btn-default navbar-btn pull-right" data-toggle="modal" href='#modal-clear'>
         <span class="glyphicon glyphicon-remove"></span> Clear
-      </button>
+      </a>
     </div>
   </div>
   <div class="row">
@@ -60,6 +68,11 @@
               <td>
                 {{ ring }}<br/>
               </td>
+              <td>
+                <a class="remove-btn pull-right" href="#" data-id="{{ loop.index0 }}">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </a>
+              </td>
             </tr>
             {% endfor %}
           </table>
@@ -68,5 +81,24 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modal-clear">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Doorbell Watcher</h4>
+      </div>
+      <div class="modal-body">
+        Do you want to clear the list?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" id="clearLogBtn" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
