@@ -39,7 +39,7 @@ class TON:
             if self.t0 is None:
                 self.t0 = time.ticks_ms()
             else:
-                self.out = time.ticks_ms() - self.t0 >= (self.seconds * 1000.0)
+                self.out = abs(time.ticks_ms() - self.t0) >= (self.seconds * 1000.0)
         else:
             self.t0 = None
         return self.out
