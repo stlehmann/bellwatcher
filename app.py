@@ -19,7 +19,7 @@ log_table = db.table('logs')
 def index():
     rings = reversed([x for x in ring_table.all()])
     logs = reversed([x for x in log_table.all()])
-    return render_template('index.html', rings=rings, log=logs)
+    return render_template('index.html', rings=rings, logs=logs)
 
 
 @app.route('/api/add', methods=['POST'])
@@ -51,7 +51,8 @@ def remove_data(id_):
 
 @app.route('/api/clear')
 def clear_data():
-    db.purge()
+    log_table.purge()
+    ring_table.purge()
     return 'ok'
 
 

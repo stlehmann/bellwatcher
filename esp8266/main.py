@@ -3,7 +3,7 @@ import time
 from urequests import post
 
 
-HOST_URI = 'http://mrl33h.de/bell/api/add'
+HOST_URI = 'http://mrl33h.de/bell/'
 # HOST_URI = 'http://192.168.1.102:8081/bell/api/add'
 
 
@@ -53,6 +53,7 @@ state = 0
 
 
 time.sleep(5)
+resp = post(HOST_URI + 'api/log', data='{"message": "Restarted"}')
 while True:
     sound = pin_bell.value() == 0
     sound_rtrig.process(sound)
@@ -76,7 +77,7 @@ while True:
     elif state == 20:
         ton.process(in_=False)
         print('State 20: Sending post request')
-        resp = post(HOST_URI, data='{"count": ' + str(trig_counter) + '}')
+        resp = post(HOST_URI + 'api/add', data='{"count": ' + str(trig_counter) + '}')
         print('State 20: Sent post')
         time.sleep(10)
         state = 0
