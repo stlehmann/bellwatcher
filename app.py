@@ -45,7 +45,7 @@ def log():
 @app.route('/api/remove/<id_>')
 def remove_data(id_):
     eid = int(id_)
-    db.remove(eids=[eid])
+    ring_table.remove(eids=[eid])
     return 'ok'
 
 
