@@ -8,9 +8,10 @@ from control import TON, R_TRIG
 __version__ = '0.0.1'
 
 HOST_URI = 'http://mrl33h.de/bell/'
+MIN_COUNT_FOR_POST = 20
 SOUND_TIME = 5.0
 ALIVE_TIME = 3600.0
-SLEEP_TIME = 10.0
+SLEEP_TIME = 1.0
 
 STATE_INIT = 0
 STATE_STANDBY = 5
@@ -69,7 +70,10 @@ def main():
                 counter += 1
                 print('Rising Edge ', counter)
             if sound_ton.out:
-                state = STATE_POST
+                if counter >= MIN_COUNT_FOR_POST:
+                    state = STATE_POST
+                else:
+                    state = STATE_SLEEP
 
         elif state == STATE_POST:
             print('Post')
@@ -84,7 +88,6 @@ def main():
                 state = STATE_INIT
 
         if alive_ton.out:
-
             resp = post(HOST_URI + 'api/log', data='{"message": "Alive"}')
             resp.close()
 

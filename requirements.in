@@ -1,0 +1,7 @@
+arrow
+eventlet
+flask
+flask_bootstrap
+flask_socketio
+tinydb
+paho_mqtt

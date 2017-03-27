@@ -5,3 +5,5 @@ bellwatcher.sublime-workspace
 db.json
 fabfile.py
 __pycache__
+micropython/
+*.egg-info/

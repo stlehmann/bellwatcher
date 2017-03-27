@@ -3,9 +3,14 @@
 
 {% block scripts %}
   {{ super() }}
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
   <script>
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
     $(document).ready(function() {
+
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+
       $('#refreshBtn').click(function() {
         location.reload();
       });
@@ -20,6 +25,14 @@
         id = $(this).data('id');
         $.get($SCRIPT_ROOT + '/api/remove/' + id);
         location.reload();
+      });
+
+      socket.on('connect', function() {
+        socket.emit('connected', 'Connected');
+      });
+
+      socket.on('new temperature', function(data) {
+        $('#temperature').val(data.temperature)
       });
     });
   </script>
@@ -44,6 +57,28 @@
 
 {% block content %}
 <div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Wohnzimmer</h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label for="temperature" class="col-xs-3 control-label">Temperatur:</label>
+              <div class="col-xs-9">
+                <div class="input-group">
+                  <input type="number" class="form-control text-right" id="temperature" readonly>
+                  <span class="input-group-addon">°C</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-6 col-md-offset-3 col-xs-12">
       <button id="refreshBtn" type="button" class="btn btn-primary navbar-btn">
